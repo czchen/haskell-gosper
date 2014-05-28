@@ -1,3 +1,4 @@
+import Data.List (genericTake)
 import Data.List.Split
 import System.Environment
 import Text.Read
@@ -11,9 +12,8 @@ main = do
             putStrLn "program [first] [count]"
         else
             let
-                first = readMaybe (args !! 0) :: Maybe Integer
-                count = readMaybe (args !! 1) :: Maybe Int
+                (first:count:_) = map readMaybe args :: [Maybe Integer]
             in
                 case (first, count) of
-                    (Just first, Just count) -> putStrLn $ show $ take count $ getList first
+                    (Just first, Just count) -> putStrLn $ show $ genericTake count $ getList first
                     _ -> putStrLn "[first] and [count] must be integer"
